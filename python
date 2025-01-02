@@ -1,0 +1,84 @@
+def is_valid_word(word, letters, required_letter, used_words):
+  pass  # feel free to remove this
+  if len(word)>=4: #passes if the word is longer than or equal to 4 letters
+    pass
+  else:
+    print("Your word must be at least 4 letters long") 
+    return False
+  if word == "End": # End is always a valid word
+    pass
+  for i in range(len(word)):
+    if word[i] in letters: # iterates through the length of the word and if the index of the word is in the list of letters it passes
+      pass
+    else:
+      print(f"{word[i]} is not a letter you can use. The only letters you can use are {letters}")
+      return False
+  if required_letter in word: # if the required_letter is in the word then it'll pass to the next check
+     pass
+  else:
+     print(f"Your word must contain the letter {required_letter}")
+     return False
+  if word in used_words: # if the word entered is in the list of used_words it cant be used
+   print("Already used") 
+   return False
+  return True # returns true if the word passes all the checks meaning its a valid word
+
+
+def get_word(letters, required_letter, used_words): 
+  while True: #Infinite loop to keep asking for the word of the user
+    word = input("Enter your word:\n")
+    if word == "END" or is_valid_word(word, letters, required_letter, used_words): #if word is END or if word is a valid word it'll return the word
+      return word
+
+def is_pangram(guess, letters):
+  pass
+  is_pangram = True # set this as true to begin the while loop
+  while is_pangram == True:
+    for i in letters: # iterates through the list of letters 
+      if i not in guess: # if i is not in the guess it'll return False
+         return False
+    else:
+        return True # if it is in guess it'll return True
+
+def get_point_value(word,letters):
+  pass
+  score_track=0 #variable keeps track of points
+  if word == "END": # just a conditional to return the score immediately if the word is END instead of counting that word as part of the score
+    return score_track
+  for i in range(len(word)): # iterares through the length of the word
+     score_track+=1 # one point per letter
+  if is_pangram(word,letters): # calling the function to see if its a pangram and if it is the score gets 7 more points
+     score_track+=7
+     print(f"{word} - Pangram!")
+     return score_track
+  else: # if its not a pangram it just prints the word and return the scores
+     #print(word) 
+     return score_track 
+
+def spelling_bee():
+  #Your code here
+  letters= input("Welcome to Spelling Bee! Enter your 7 letters, separated by commas:\n") # gets the letters from the user
+  letters=letters.split(',') #splits the letter into a list like this 'w','e','r','e','s','o','n','o','t','b','a','c','k'
+  while True: # infinte loop
+    required_letter=input(f"Which of these 7 letters {letters} will be your required letter?\n") #prompts the user to enter the required letter
+    if required_letter not in letters: # if the required_letter is not in letters then itll say whats below
+      print(f"{required_letter} is not an available letter. Please choose from the following: {letters}")
+    else:
+      break # breaks the loop if it is
+
+  used_words = [] #empty variables to store the used words and then the points
+  score_track=0
+
+  word=get_word(letters, required_letter, used_words) # gets the word from the user using the get_word function
+  used_words.append(word)# appends the word that was just entered to the used_words variable
+  score_track += get_point_value(word,letters) # adds the score of that word using the get_point_value function to score_track
+
+  while word != "END": # while the word isnt END it starts the while loop and since we start off above entering a word as long as that word isn't equal to END then the while loop starts
+    word=get_word(letters, required_letter, used_words) #repeats everything done above the while loop but it does this continously as the user inputs new words
+    used_words.append(word)
+    score_track += get_point_value(word,letters)
+  
+  print(f"Your final score is {score_track}") #prints the final score
+
+ 
+spelling_bee() # DO NOT REMOVE 
